@@ -4,9 +4,9 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>The Lightbearer | Luminera | Blackout</title>.
-<link rel="icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=2" type="image/x-icon">
-<link rel="shortcut icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=2" type="image/x-icon">
-<link rel="apple-touch-icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=2">
+  <link rel="icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3" type="image/x-icon">
+  <link rel="shortcut icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3" type="image/x-icon">
+  <link rel="apple-touch-icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3">
 <style>
   :root {
     --bg: #0b1220;
@@ -279,17 +279,20 @@
     vertical-align: middle;
   }
 
-  @media (max-width: 600px) {
-    .top-controls {
-      top: 10px;
-      right: 10px;
-      gap: 5px;
-    }
-    .lang-select {
-      font-size: 12px;
-      padding: 5px 22px 5px 28px;
-      background-position: 7px center;
-    }
+@media (max-width: 600px) {
+  .top-controls {
+    position: relative;
+    justify-content: center;
+    margin: 0 auto;
+    top: 0;
+    right: 0;
+    padding-top: 10px;
+  }
+
+  .lang-select {
+    margin-right: 8px;
+  }
+}
     .ss-badge {
       font-size: 12px;
       padding: 5px 10px;
