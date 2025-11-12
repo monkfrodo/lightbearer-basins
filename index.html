@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>LThe Lightbearer | Luminera | Blackout</title>
+<title>Lightbearer – Basins</title>
 <style>
   :root {
     --bg: #0b1220;
@@ -15,9 +15,7 @@
     --crit: #ef4444;
     --radius: 16px;
   }
-
   * { box-sizing: border-box; }
-
   body {
     margin: 0;
     font-family: "Inter", system-ui, sans-serif;
@@ -28,188 +26,48 @@
     min-height: 100vh;
     position: relative;
   }
-
-  /* overlay escuro por cima da imagem */
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.8));
-    pointer-events: none;
-    z-index: 0;
+  body::before{
+    content:"";position:fixed;inset:0;
+    background:linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.8));
+    pointer-events:none;z-index:0;
   }
-
-  .wrap {
-    position: relative;
-    z-index: 1;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 60px 16px 40px;
-  }
-
-  h1 {
-    font-size: 28px;
-    margin: 0 0 10px;
-    font-weight: 800;
-    text-align: center;
-  }
-
-  .subtitle {
-    text-align: center;
-    color: var(--muted);
-    font-size: 15px;
-    margin-bottom: 30px;
-  }
-
-  .card {
-    background: rgba(10,15,25,0.85);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: var(--radius);
-    padding: 24px;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.3);
-    margin-bottom: 30px;
-  }
-
-  .form {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-    gap: 16px;
-    align-items: end;
-  }
-
-  label {
-    font-size: 13px;
-    color: var(--muted);
-    display: block;
-    margin-bottom: 6px;
-  }
-
-  input, select {
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: #10182b;
-    color: #e5ecff;
-    font-size: 15px;
-  }
-
-  .buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 22px; /* respiro extra */
-  }
-
-  button {
-    padding: 14px 26px;
-    border-radius: 12px;
-    border: none;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    min-width: 140px;
-    font-size: 15px;
-  }
-
-  button:hover { opacity: 0.9; transform: translateY(-1px); }
-
-  .btn-primary { background: var(--accent); color: white; }
-  .btn-secondary { background: #334155; color: #e5ecff; }
-
-  @media (min-width: 900px) {
-    .buttons {
-      margin-top: 30px;
-      gap: 20px;
-    }
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
-    gap: 16px;
-  }
-
-  .basin {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: var(--radius);
-    padding: 16px;
-    transition: 0.3s;
-  }
-
-  .basin:hover {
-    background: rgba(255,255,255,0.1);
-    transform: translateY(-2px);
-  }
-
-  .title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 700;
-  }
-
-  .badge {
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-weight: 600;
-  }
-  .badge.safe  { background: rgba(34,197,94,0.15); color: var(--safe); }
-  .badge.warn  { background: rgba(234,179,8,0.15); color: var(--warn); }
-  .badge.risk  { background: rgba(245,158,11,0.15); color: var(--risk); }
-  .badge.crit  { background: rgba(239,68,68,0.15); color: var(--crit); animation: blink 1s linear infinite; }
-  @keyframes blink { 50% { opacity:.5; } }
-
-  .muted { color: var(--muted); font-size: 13px; }
-  .due { margin-top: 8px; font-size: 14px; }
-
-  .bar {
-    margin-top: 10px;
-    height: 8px;
-    background: #0b1220;
-    border-radius: 999px;
-    overflow: hidden;
-  }
-
-  .fill { height: 100%; width: 0%; transition: width 1s linear, background 0.5s ease; }
-  .fill.safe { background: var(--safe); }
-  .fill.warn { background: var(--warn); }
-  .fill.risk { background: var(--risk); }
-  .fill.crit { background: var(--crit); box-shadow: 0 0 10px 2px var(--crit); }
-
-  .footer {
-    margin-top: 40px;
-    text-align: center;
-    color: var(--muted);
-    font-size: 13px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 20px;
-  }
-
-  /* ícone do evento no fim da página */
-  .icon {
-    display: flex;
-    justify-content: center;
-    margin-top: 25px;
-  }
-  .icon img {
-    width: 120px;
-    opacity: 0.8;
-  }
-  @media (min-width: 900px) {
-    .icon img { width: 160px; }
-  }
+  .wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:60px 16px 40px}
+  h1{font-size:28px;margin:0 0 10px;font-weight:800;text-align:center}
+  .subtitle{text-align:center;color:var(--muted);font-size:15px;margin-bottom:30px}
+  .card{background:rgba(10,15,25,.85);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;box-shadow:0 4px 25px rgba(0,0,0,.3);margin-bottom:30px}
+  .form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;align-items:end}
+  label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+  input,select{width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:#10182b;color:#e5ecff;font-size:15px}
+  .buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+  button{padding:14px 26px;border-radius:12px;border:none;font-weight:600;cursor:pointer;transition:.2s;min-width:140px;font-size:15px}
+  button:hover{opacity:.9;transform:translateY(-1px)}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-secondary{background:#334155;color:#e5ecff}
+  @media (min-width:900px){.buttons{margin-top:30px;gap:20px}}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  .basin{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;transition:.3s}
+  .basin:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
+  .title{display:flex;justify-content:space-between;align-items:center;font-weight:700}
+  .badge{font-size:11px;padding:4px 10px;border-radius:999px;font-weight:600}
+  .badge.safe{background:rgba(34,197,94,.15);color:#22c55e}
+  .badge.warn{background:rgba(234,179,8,.15);color:#eab308}
+  .badge.risk{background:rgba(245,158,11,.15);color:#f59e0b}
+  .badge.crit{background:rgba(239,68,68,.15);color:#ef4444;animation:blink 1s linear infinite}
+  @keyframes blink{50%{opacity:.5}}
+  .muted{color:var(--muted);font-size:13px}
+  .due{margin-top:8px;font-size:14px}
+  .bar{margin-top:10px;height:8px;background:#0b1220;border-radius:999px;overflow:hidden}
+  .fill{height:100%;width:0%;transition:width 1s linear,background .5s ease}
+  .fill.safe{background:#22c55e}.fill.warn{background:#eab308}.fill.risk{background:#f59e0b}.fill.crit{background:#ef4444;box-shadow:0 0 10px 2px #ef4444}
+  .footer{margin-top:40px;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,.1);padding-top:20px}
+  .icon{display:flex;justify-content:center;margin-top:25px}
+  .icon img{width:120px;opacity:.8}
+  @media (min-width:900px){.icon img{width:160px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>The Lightbearer | Luminera | Blackout</h1>
+  <h1>Lightbearer – Basins</h1>
   <div class="subtitle">Registre um acendimento (reacender a cada 3h). Seu fuso é detectado automaticamente.</div>
 
   <div class="card">
@@ -256,19 +114,16 @@
     const d = new Date(iso);
     return d.toLocaleString('pt-BR',{hour12:false});
   }
-
   function fmtCountdown(sec){
-    const s=Math.abs(sec);
-    const sign=sec<0?'-':'';
+    const s=Math.abs(sec), sign=sec<0?'-':'';
     const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60;
     return `${sign}${pad(h)}:${pad(m)}:${pad(ss)}`;
   }
-
   function bucket(sec){
     if(sec==null) return 'safe';
     if(sec>=120*60) return 'safe';
-    if(sec>=60*60) return 'warn';
-    if(sec>=30*60) return 'risk';
+    if(sec>=60*60)  return 'warn';
+    if(sec>=30*60)  return 'risk';
     return 'crit';
   }
 
@@ -293,8 +148,7 @@
       state.slaHours=data.slaHours;
       state.serverNowMs=data.now||Date.now();
       state.clientNowAtFetch=Date.now();
-      render();
-      startTick();
+      render(); startTick();
     };
     const s=document.createElement('script');
     s.src=APPS+'?fn=state&callback='+cb;
@@ -303,20 +157,15 @@
 
   function render(){
     document.getElementById('tzLabel').textContent=Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const sel=document.getElementById('basin');
-    sel.innerHTML='';
+
+    const sel=document.getElementById('basin'); sel.innerHTML='';
     state.items.forEach(it=>{
-      const o=document.createElement('option');
-      o.value=it.basin;
-      o.textContent=it.basin;
-      sel.appendChild(o);
+      const o=document.createElement('option'); o.value=it.basin; o.textContent=it.basin; sel.appendChild(o);
     });
 
-    const grid=document.getElementById('grid');
-    grid.innerHTML='';
+    const grid=document.getElementById('grid'); grid.innerHTML='';
     state.items.forEach(it=>{
-      const div=document.createElement('div');
-      div.className='basin';
+      const div=document.createElement('div'); div.className='basin';
       const k=bucket(it.remainingSec);
       const title=`<div class="title"><span>${it.basin}</span><span class="badge ${k}">${{safe:'SEGURO',warn:'ATENÇÃO',risk:'RISCO',crit:'CRÍTICO'}[k]}</span></div>`;
       const last=it.lastIsoUtc?`<div class="muted">Último: <b>${fmtLocal(it.lastIsoUtc)}</b> · ${it.lastPlayer||''}</div>`:`<div class="muted">Sem registros ainda</div>`;
@@ -361,16 +210,14 @@
     const fd=new FormData(e.target);
     const dt=document.getElementById('dt').value;
     const ms=dt?new Date(dt).getTime():Date.now();
-    fd.set('typed',dt||'');
-    fd.set('ms',String(ms));
+    fd.set('typed',dt||''); fd.set('ms',String(ms));
     fd.set('tz',Intl.DateTimeFormat().resolvedOptions().timeZone||'');
     sendForm(fd);
   });
 
   document.getElementById('nowBtn').addEventListener('click',setNow);
   document.getElementById('refreshBtn').addEventListener('click',loadState);
-  setNow();
-  loadState();
+  setNow(); loadState();
 </script>
 </body>
 </html>
