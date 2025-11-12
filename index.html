@@ -223,7 +223,7 @@
   setNow(); loadState();
 </script>
 
-<!-- ====== ADDON: Idioma + Server Save (versão refinada) ====== -->
+<!-- ====== ADDON: Idioma + Server Save (versão compacta e alinhada) ====== -->
 <style>
   .top-controls {
     position: fixed;
@@ -232,26 +232,25 @@
     z-index: 50;
     display: flex;
     align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
+    gap: 6px;
   }
 
   /* seletor de idioma */
   .lang-select {
     background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
     color: #fff;
-    font-size: 14px;
-    padding: 6px 12px 6px 40px;
+    font-size: 13px;
+    padding: 5px 26px 5px 30px;
     cursor: pointer;
     outline: none;
     appearance: none;
     font-weight: 500;
     background-image: url("https://flagcdn.com/w20/br.png");
     background-repeat: no-repeat;
-    background-size: 20px auto;
-    background-position: 12px center;
+    background-size: 18px auto;
+    background-position: 8px center;
   }
 
   .lang-select option {
@@ -260,16 +259,16 @@
 
   /* badge server save */
   .ss-badge {
-    background: rgba(220,38,38,0.08);
-    border: 1px solid rgba(220,38,38,0.4);
-    border-radius: 999px;
-    padding: 6px 14px;
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.5);
+    border-radius: 20px;
+    padding: 5px 12px;
     font-weight: 600;
     font-size: 13px;
     color: #ef4444;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     white-space: nowrap;
     line-height: 1;
   }
@@ -284,17 +283,16 @@
     .top-controls {
       top: 10px;
       right: 10px;
-      gap: 8px;
+      gap: 5px;
     }
     .lang-select {
-      font-size: 13px;
-      padding: 5px 10px 5px 36px;
-      background-position: 10px center;
+      font-size: 12px;
+      padding: 5px 22px 5px 28px;
+      background-position: 7px center;
     }
     .ss-badge {
       font-size: 12px;
       padding: 5px 10px;
-      gap: 6px;
     }
   }
 </style>
@@ -307,13 +305,13 @@
   </select>
 
   <div id="ssBadge" class="ss-badge">
-    <img src="https://cdn-icons-png.flaticon.com/512/992/992703.png" alt="ampulheta">
+    <img src="https://cdn-icons-png.flaticon.com/512/2099/2099153.png" alt="ampulheta">
     <span id="ssText">SS+0 (calculando...)</span>
   </div>
 </div>
 
 <script>
-  // mapa de bandeiras
+  // Bandeira dinâmica
   const langSelector = document.getElementById("langSelector");
   const flagMap = { pt: "br", en: "us", es: "mx" };
   function updateFlag() {
@@ -326,7 +324,7 @@
   updateFlag();
   langSelector.addEventListener("change", updateFlag);
 
-  // cálculo SS
+  // Server Save automático
   function updateServerSave() {
     const now = new Date();
     const tzSP = "America/Sao_Paulo";
