@@ -219,5 +219,53 @@
   document.getElementById('refreshBtn').addEventListener('click',loadState);
   setNow(); loadState();
 </script>
+  <!-- ====== ADDON: Language selector + Server Save ====== -->
+<div style="position: fixed; top: 16px; right: 16px; z-index: 50; display: flex; gap: 10px; align-items: center;">
+  <!-- Language Selector -->
+  <select id="langSelector" style="background: #10182b; color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 4px 6px;">
+    <option value="pt" selected>🇧🇷</option>
+    <option value="en">🇺🇸</option>
+    <option value="es">🇲🇽</option>
+  </select>
+
+  <!-- Server Save Badge -->
+  <div id="ssBadge" style="background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid #22c55e; border-radius: 20px; padding: 5px 12px; font-weight: 600; font-size: 13px;">
+    ⏰ Calculando SS...
+  </div>
+</div>
+
+<script>
+  /* ========== Server Save Timer ========== */
+  function updateServerSave() {
+    const badge = document.getElementById("ssBadge");
+    const now = new Date();
+    const tzSP = "America/Sao_Paulo";
+    const nowSP = new Date(now.toLocaleString("en-US", { timeZone: tzSP }));
+
+    const ss = new Date(nowSP);
+    ss.setHours(6, 0, 0, 0);
+    if (nowSP < ss) ss.setDate(ss.getDate() - 1);
+
+    const diffHours = (nowSP - ss) / (1000 * 60 * 60);
+    const hours = Math.floor(diffHours);
+    const minutes = Math.floor((diffHours - hours) * 60);
+    const remaining = 60 - minutes;
+
+    badge.textContent = `⏰ SS+${hours} (${remaining}m restantes)`;
+  }
+
+  updateServerSave();
+  setInterval(updateServerSave, 60000);
+
+  /* ========== Language Selector (Visual Only) ========== */
+  const langSelector = document.getElementById("langSelector");
+  const savedLang = localStorage.getItem("lang") || "pt";
+  langSelector.value = savedLang;
+  langSelector.addEventListener("change", e => {
+    localStorage.setItem("lang", e.target.value);
+  });
+</script>
+<!-- ====== END ADDON ====== -->
+  
 </body>
 </html>
