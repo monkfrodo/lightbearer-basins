@@ -223,19 +223,18 @@
   setNow(); loadState();
 </script>
 
-<!-- ====== ADDON: Idioma + Server Save (versão compacta e alinhada) ====== -->
+<!-- ====== ADDON: Idioma + Server Save (versão corrigida e refinada) ====== -->
 <style>
   .top-controls {
     position: fixed;
-    top: 16px;
-    right: 20px;
+    top: 14px;
+    right: 18px;
     z-index: 50;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
   }
 
-  /* seletor de idioma */
   .lang-select {
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.15);
@@ -251,21 +250,19 @@
     background-repeat: no-repeat;
     background-size: 18px auto;
     background-position: 8px center;
+    transition: background-image 0.2s ease;
   }
 
-  .lang-select option {
-    color: #000;
-  }
+  .lang-select option { color: #000; }
 
-  /* badge server save */
   .ss-badge {
-    background: rgba(239,68,68,0.1);
-    border: 1px solid rgba(239,68,68,0.5);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
     border-radius: 20px;
     padding: 5px 12px;
     font-weight: 600;
     font-size: 13px;
-    color: #ef4444;
+    color: #f87171;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -279,23 +276,14 @@
     vertical-align: middle;
   }
 
-@media (max-width: 600px) {
-  .top-controls {
-    position: relative;
-    justify-content: center;
-    margin: 0 auto;
-    top: 0;
-    right: 0;
-    padding-top: 10px;
-  }
-
-  .lang-select {
-    margin-right: 8px;
-  }
-}
-    .ss-badge {
-      font-size: 12px;
-      padding: 5px 10px;
+  @media (max-width: 600px) {
+    .top-controls {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      justify-content: center;
+      gap: 8px;
     }
   }
 </style>
@@ -314,34 +302,74 @@
 </div>
 
 <script>
-  // Bandeira dinâmica
+  // ====== Bandeira e idioma ======
   const langSelector = document.getElementById("langSelector");
   const flagMap = { pt: "br", en: "us", es: "mx" };
-  function updateFlag() {
-    const code = flagMap[langSelector.value] || "br";
+  const translations = {
+    pt: {
+      title: "The Lightbearer | Luminera | Blackout",
+      subtitle: "Registre um acendimento (reacender a cada 3h). Seu fuso é detectado automaticamente.",
+      register: "Acender / Registrar",
+      update: "Atualizar",
+      player: "Player",
+      date: "Data e hora (seu horário)"
+    },
+    en: {
+      title: "The Lightbearer | Luminera | Blackout",
+      subtitle: "Register a lighting (reignite every 3h). Your timezone is detected automatically.",
+      register: "Light / Register",
+      update: "Refresh",
+      player: "Player",
+      date: "Date and Time (your timezone)"
+    },
+    es: {
+      title: "El Portador de Luz | Luminera | Blackout",
+      subtitle: "Registra un encendido (reencender cada 3h). Tu zona horaria se detecta automáticamente.",
+      register: "Encender / Registrar",
+      update: "Actualizar",
+      player: "Jugador",
+      date: "Fecha y hora (tu zona horaria)"
+    }
+  };
+
+  function updateFlagAndText() {
+    const lang = langSelector.value;
+    const code = flagMap[lang] || "br";
     langSelector.style.backgroundImage = `url("https://flagcdn.com/w20/${code}.png")`;
-    localStorage.setItem("lang", langSelector.value);
+    localStorage.setItem("lang", lang);
+
+    const t = translations[lang];
+    if (t) {
+      document.querySelector("h1").textContent = t.title;
+      document.querySelector(".subtitle").textContent = t.subtitle;
+      const playerLabel = document.querySelector('label[for="player"]');
+      const dateLabel = document.querySelector('label[for="date"]');
+      if (playerLabel) playerLabel.textContent = t.player;
+      if (dateLabel) dateLabel.textContent = t.date;
+      const btnSend = document.getElementById("btnSend");
+      const btnUpdate = document.getElementById("btnUpdate");
+      if (btnSend) btnSend.textContent = t.register;
+      if (btnUpdate) btnUpdate.textContent = t.update;
+    }
   }
+
   const savedLang = localStorage.getItem("lang") || "pt";
   langSelector.value = savedLang;
-  updateFlag();
-  langSelector.addEventListener("change", updateFlag);
+  updateFlagAndText();
+  langSelector.addEventListener("change", updateFlagAndText);
 
-  // Server Save automático
+  // ====== Server Save ======
   function updateServerSave() {
-    const now = new Date();
     const tzSP = "America/Sao_Paulo";
-    const nowSP = new Date(now.toLocaleString("en-US", { timeZone: tzSP }));
-
+    const nowSP = new Date(new Date().toLocaleString("en-US", { timeZone: tzSP }));
     const ss = new Date(nowSP);
     ss.setHours(6, 0, 0, 0);
     if (nowSP < ss) ss.setDate(ss.getDate() - 1);
 
-    const diffHours = (nowSP - ss) / (1000 * 60 * 60);
+    const diffHours = (nowSP - ss) / 3600000;
     const hours = Math.floor(diffHours);
     const minutes = Math.floor((diffHours - hours) * 60);
     const remaining = 60 - minutes;
-
     document.getElementById("ssText").textContent = `SS+${hours} (${remaining}m restantes)`;
   }
 
